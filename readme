@@ -1,0 +1,5 @@
+这是一个面试项目：
+first_answer.py  : 是第一个题目的代码
+second_answer.py : 是第二题的代码，使用urllib2来抓取网页源代码。然后使用BeautifulSoup 类库来解析网页文件。并且通过火狐浏览器的firebug来分析网页源代码中的标签规律，抓取我们想要的标签内容。得到我们想要的内容后进行打印
+third_answer : 是第三道题目的代码 ，运用了django框架，django是基于python的一个面向web应用的快速开发框架。需要安装MySQLdb模块，方便与mysql数据库进行交互。在第三道题目中mysql我新建的是igoda数据库，数据表为igoda_list 。
+需要在admin下展示，因此我需要在admin.py中进行注册，这样才可以在后台进行展示数据库内容。同时编辑models.py 文件，映射数据库对象模型，创建mysql数据库字段。在urls.py中编辑url映射，映射到localhost:8000/igoda/getWeb/这个url上，同时处理函数映射到igoda.views.getWeb中进行相关处理。将抓取到的店名，详细地址（地区+门牌地址），电话号码存储进数据库。在浏览器中输入localhost:8000/admin/可以查看后台数据。
