@@ -1,0 +1,37 @@
+#coding=utf-8
+#引进相关类库，使用beautifulSoup进行解析
+import urllib2
+from bs4 import BeautifulSoup
+#抓取店名使用的URL
+url = "http://www.dianping.com/search/category/2/45/g147"
+#抓取电话号码时候的URL前缀
+url1 = 'http://www.dianping.com'
+#设置抓取的请求，设置user-agent 防止网站出现拒绝的情况
+req = urllib2.Request(url, headers={'User-Agent' : "Magic Browser"})
+#得到抓取的网页并进行解析
+webpage= urllib2.urlopen(req)
+parser = BeautifulSoup(webpage)
+#得到店名列表
+shop_list = parser.find('div','shop-all-list').findAll('li')
+for title_shop in shop_list:
+	tit_div = title_shop.find('div','tit')
+	name = tit_div.a.get_text()
+	hre =url1 + tit_div.a['href']
+	#去除字符串结尾的换行符 
+	print name.replace(u'\n','')
+	#进入店面的详细信息URL，抓取电话号码以及详细地址
+	requ = urllib2.Request(hre, headers={'User-Agent' : "Magic Browser"})
+	res = urllib2.urlopen(requ)
+	soup = BeautifulSoup(res)
+	base_info = soup.find('div','basic-info')
+	title = base_info.find('span',itemprop="street-address")
+	address_text= title.get_text().replace(u'\n','')
+	diqu = base_info.find('span',itemprop="locality region")
+	
+	print("%s %s" % (diqu.get_text().replace('\n',''),address_text))
+	tel = soup.find('span',itemprop="tel")
+	telphone = tel.get_text().replace(u'\n','')
+	print telphone
+
+	
+
